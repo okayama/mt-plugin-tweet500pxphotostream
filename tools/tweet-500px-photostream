@@ -1,0 +1,33 @@
+#!/usr/bin/perl -w
+use strict;
+use lib qw( lib ../lib );
+use lib qw( extlib ../extlib );
+use lib qw( plugins/Tweet500pxPhotostream/lib plugins/Tweet500pxPhotostream/extlib );
+
+use MT;
+
+my $photo_id = 0;
+my $blog_id = 0;
+
+require Getopt::Long;
+Getopt::Long::GetOptions(
+    "photo_id=i" => \$photo_id,
+    "blog_id=i" => \$blog_id,
+);
+
+my $app = MT->instance;
+if ( my $plugin = $app->component( 'Tweet500pxPhotostream' ) ) {
+    if ( $photo_id && $photo_id =~ /^[0-9]{1,}$/ ) {
+        require Tweet500pxPhotostream::Util;
+        if ( $blog_id && $blog_id =~ /^[0-9]{1,}$/ ) {
+            Tweet500pxPhotostream::Util::tweet_500px_photostream_by_id( $photo_id, $blog_id );
+        } else {
+            print Tweet500pxPhotostream::Util::shorter_url( $photo_id ) . "\n";
+        }
+    } else {
+        require Tweet500pxPhotostream::Tasks;
+        Tweet500pxPhotostream::Tasks::tweet_500px_photostream();
+    }
+}
+
+1;

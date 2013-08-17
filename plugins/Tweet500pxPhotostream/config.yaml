@@ -1,0 +1,41 @@
+id: Tweet500pxPhotostream
+name: Tweet500pxPhotostream
+key: tweet500pxphotostream
+version: 1.1
+description: <__trans phrase="Available Tweet500pxPhotostream.">
+author_name: okayama
+author_link: http://weeeblog.net/
+l10n_class: Tweet500pxPhotostream::L10N
+blog_config_template: tweet500pxphotostream_config_blog.tmpl
+settings:
+    consumer_key:
+        default: DiQXWs9CGVSmEFZABZ1haw
+        scope: system
+    consumer_secret:
+        default: rXoW5BFhK6TM9vJwu8DMIHgkBQjh1onxstXZiMDY
+        scope: system
+    access_token:
+    access_token_secret:
+    user_id:
+    last_updated:
+    tweet_limit:
+        default: 5
+    tweet_format:
+        default: *author* uploaded *title* to 500px: *shorter_url* #500px #Tweet500pxPhotostream
+applications:
+    cms:
+        methods:
+            tweet500pxphotostream_oauth: $tweet500pxphotostream::Tweet500pxPhotostream::CMS::_mode_tweet500pxphotostream_oauth
+            tweet500pxphotostream_get_access_token: $tweet500pxphotostream::Tweet500pxPhotostream::CMS::_mode_tweet500pxphotostream_get_access_token
+            tweet500pxphotostream_tweet_photo: $tweet500pxphotostream::Tweet500pxPhotostream::CMS::_mode_tweet500pxphotostream_tweet_photo
+tasks:
+    tweet500pxphotostream:
+        label: Tweet500pxPhotostream Task
+        frequency: 5
+        code: $tweetflickrphotostream::TweetFlickrPhotostream::Tasks::tweet_500px_photostream
+tags:
+    function:
+        500pxShorterURL: $tweet500pxphotostream::Tweet500pxPhotostream::Tags::_hdlr_500px_shorter_url
+callbacks:
+    MT::App::CMS::template_source.dashboard: $tweet500pxphotostream::Tweet500pxPhotostream::Callbacks::_cb_ts_dashboard
+    MT::App::CMS::template_source.tweet500pxphotostream_config_blog: $tweet500pxphotostream::Tweet500pxPhotostream::Callbacks::_cb_ts_tweet500pxphotostream_config_blog
