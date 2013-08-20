@@ -52,7 +52,7 @@ sub _get_tweet {
         for my $item ( @items ) {
             my $updated = $item->{ pubDate };
             my $updated_epoch = str2time( $updated );
-            if ( $last_updated && ( $updated_epoch <= $last_updated ) ) {
+            if ( $last_updated && ( $updated_epoch < $last_updated ) ) {
                 next;
             }
             if ( my $photo_id = $item->{ 'link' } ) {
